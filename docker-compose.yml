@@ -1,0 +1,55 @@
+x-krill-build: &x-krill-build
+  build:
+    context: ./krill
+    dockerfile: ../Dockerfile
+
+x-krill-common: &x-krill-common
+  image: krill
+  #ports:
+  #  - 30000:3000
+
+services:
+  # testbed: root RPKI CA
+  krill-root:
+    <<: [*x-krill-build, *x-krill-common]
+    environment:
+      - KRILL_ADMIN_TOKEN=abcde
+    networks:
+      krill_net:
+        aliases:
+          - root.krill
+          - root.krill.example.com
+
+  krill-test1:
+    <<: [*x-krill-common]
+    environment:
+      - KRILL_ADMIN_TOKEN=abcde
+    networks:
+      krill_net:
+        aliases:
+          - test1.krill
+          - test1.krill.example.com
+
+  krill-test2:
+    <<: [*x-krill-common]
+    environment:
+      - KRILL_ADMIN_TOKEN=abcde
+    networks:
+      krill_net:
+        aliases:
+          - test2.krill
+          - test2.krill.example.com
+
+  squid:
+    image: ubuntu/squid
+    init: true
+    ports:
+      - "127.0.0.1:33128:3128"
+    volumes:
+      - ./squid-ssl-ports.conf:/etc/squid/conf.d/allow-ssl-ports.conf:ro
+    networks:
+      krill_net:
+
+networks:
+  krill_net:
+    name: krill_net
