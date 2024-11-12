@@ -170,6 +170,8 @@ RUN chown ${RUN_USER}: /opt/entrypoint.sh
 # an earlier version of Krill, because those versions run Krill as root.
 # USER $RUN_USER_UID
 
+USER $RUN_USER_UID
+
 # Hint to operators the TCP port that the application in this image listens on
 # (by default).
 EXPOSE 3000/tcp
