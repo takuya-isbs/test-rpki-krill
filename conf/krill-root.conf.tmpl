@@ -1,9 +1,9 @@
 ip = "0.0.0.0"
-port = 3000
+port = @PORT@
 data_dir = "/var/krill/data"
 log_type = "stderr"
 
-service_uri = "https://root.krill.example.org/"
+service_uri = "https://root.@DOMAIN@:@PORT@/"
 
 # testbed configuration
 # REFERENCE: https://krill.docs.nlnetlabs.nl/en/stable/testbed.html
@@ -20,7 +20,7 @@ service_uri = "https://root.krill.example.org/"
 # files as they are written to disk ($data_dir/repo/rrdp/)
 #
 # Set the following value to *your* public proxy hostname and path.
-rrdp_base_uri = "https://root.krill.example.org/rrdp/"
+rrdp_base_uri = "https://root.@DOMAIN@:@PORT@/rrdp/"
 
 # RSYNC BASE URI
 #
@@ -29,7 +29,7 @@ rrdp_base_uri = "https://root.krill.example.org/rrdp/"
 # Make sure that you have an rsyncd running and a module which is
 # configured to expose the rsync repository files. By default these
 # files would be saved to: $data/repo/rsync/current/
-rsync_jail = "rsync://root.krill.example.org/repo/"
+rsync_jail = "rsync://root.@DOMAIN@:@PORT@/repo/"
 
 # TA AIA
 #
@@ -42,10 +42,10 @@ rsync_jail = "rsync://root.krill.example.org/repo/"
 # Manually retrieve the TA certificate from krill and copy it
 # over - it won't change again. You can get it at:
 # https://<yourkrill>/ta/ta.cer
-ta_aia = "rsync://root.krill.example.org/ta/ta.cer"
+ta_aia = "rsync://root.@DOMAIN@:@PORT@/ta/ta.cer"
 
 # TA URI
 #
 # Like above, make the TA certificate available over HTTPS and
 # specify the url here so that it may be included in the TAL.
-ta_uri = "https://root.krill.example.org/ta/ta.cer"
+ta_uri = "https://root.@DOMAIN@:@PORT@/ta/ta.cer"

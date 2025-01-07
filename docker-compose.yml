@@ -7,12 +7,13 @@ x-krill-build: &x-krill-build
       - RUN_USER_GID=${RUN_USER_GID}
 
 x-krill-common: &x-krill-common
+  command: ["krill", "-c", "/var/krill/krill.conf"]
   image: krill
   #ports:
-  #  - 30000:3000
+  #  - 30000:${KRILL_PORT:-3000}
 
 x-krill-env: &x-krill-env
-  KRILL_ADMIN_TOKEN: abcde
+  KRILL_ADMIN_TOKEN: ${KRILL_ADMIN_TOKEN}
   KRILL_LOG_LEVEL: debug
   TZ: Asia/Tokyo
   RUN_USER_UID: ${RUN_USER_UID}
@@ -25,7 +26,6 @@ networks:
 services:
   # testbed: root RPKI CA
   krill-root:
-    command: ["krill", "-c", "/var/krill/krill.conf"]
     <<: [*x-krill-build, *x-krill-common]
     environment:
       <<: [*x-krill-env]
@@ -36,34 +36,42 @@ services:
     networks:
       krill_net:
         aliases:
-          - root.krill
-          - root.krill.example.org
+          - root
+          - root.${DOMAIN}
 
   krill-host1:
     <<: [*x-krill-common]
     environment:
-      - KRILL_ADMIN_TOKEN=abcde
+      <<: [*x-krill-env]
+    volumes:
+      - ./SHARE:/SHARE:rw
+      - ./data-host1:/var/krill/data:rw
+      - ./conf/krill-host1.conf:/var/krill/krill.conf:ro
     networks:
       krill_net:
         aliases:
-          - host1.krill
-          - host1.krill.example.org
+          - host1
+          - host1.${DOMAIN}
 
   krill-host2:
     <<: [*x-krill-common]
     environment:
-      - KRILL_ADMIN_TOKEN=abcde
+      <<: [*x-krill-env]
+    volumes:
+      - ./SHARE:/SHARE:rw
+      - ./data-host2:/var/krill/data:rw
+      - ./conf/krill-host2.conf:/var/krill/krill.conf:ro
     networks:
       krill_net:
         aliases:
-          - host2.krill
-          - host2.krill.example.org
+          - host2
+          - host2.${DOMAIN}
 
   squid:
     image: ubuntu/squid
     init: true
     ports:
-      - "127.0.0.1:33128:3128"
+      - "${SQUID_ADDR_PORT:-127.0.0.1:33128}:3128"
     volumes:
       - ./squid-ssl-ports.conf:/etc/squid/conf.d/allow-ssl-ports.conf:ro
     networks:

@@ -1,4 +1,9 @@
 *~
 /.env
 /krill/
-/data-root
+/data-root/
+/data-host1/
+/data-host2/
+/conf/krill-root.conf
+/conf/krill-host1.conf
+/conf/krill-host2.conf
