@@ -1,3 +1,7 @@
+# test-rpki-krill
+
+実験環境として kirll を docker compose で起動する。
+
 ## .env
 
 - RUN_USER_UID : 自分のuidを指定
@@ -32,13 +36,14 @@ KRILL_ADMIN_TOKEN=abcde
 - ブラウザの設定で SQUID_ADDR_PORT に HTTP でプロキシ接続するようにする
   - ssh ポート転送も可能
   - ブラウザ拡張 ZeroOmega を使うと便利
-    - 自動でプロキシする場合 DOMAIN で指定したホスト名をプロキシする
-- 以下 DOMAIN=kirll.test の例
-- https://root.krill.test:3000/ を開く
-- https://host1.krill.test:3000/ を開く
-- https://root.krill.test:3000/ui/testbed を開く
+    - auto swich でプロキシする場合 DOMAIN で指定したホスト名をプロキシする
+    - 例: *.krill.test
+- (例) DOMAIN=kirll.test の場合の URL
+  - https://root.krill.test:3000/ を開く
+  - https://host1.krill.test:3000/ を開く
+  - https://root.krill.test:3000/ui/testbed を開く
 
-## コマンド
+## コマンド実行例
 
 - docker compose exec krill-root bash
 - krillc --token abcde children info --ca testbed --child host1
