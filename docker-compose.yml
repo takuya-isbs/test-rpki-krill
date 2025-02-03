@@ -26,6 +26,7 @@ networks:
 services:
   # testbed: root RPKI CA
   krill-root:
+    hostname: testbed
     <<: [*x-krill-build, *x-krill-common]
     environment:
       <<: [*x-krill-env]
@@ -40,6 +41,7 @@ services:
           - root.${DOMAIN}
 
   krill-host1:
+    hostname: host1
     <<: [*x-krill-common]
     environment:
       <<: [*x-krill-env]
@@ -54,6 +56,7 @@ services:
           - host1.${DOMAIN}
 
   krill-host2:
+    hostname: host2
     <<: [*x-krill-common]
     environment:
       <<: [*x-krill-env]
