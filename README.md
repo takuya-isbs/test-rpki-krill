@@ -36,7 +36,7 @@ KRILL_ADMIN_TOKEN=abcde
 - ブラウザの設定で SQUID_ADDR_PORT に HTTP でプロキシ接続するようにする
   - ssh ポート転送も可能
   - ブラウザ拡張 ZeroOmega を使うと便利
-    - auto swich でプロキシする場合 DOMAIN で指定したホスト名をプロキシする
+    - auto switch でプロキシする場合 DOMAIN で指定したホスト名をプロキシする
     - 例: *.krill.test
 - (例) DOMAIN=kirll.test の場合の URL
   - https://root.krill.test:3000/ を開く
