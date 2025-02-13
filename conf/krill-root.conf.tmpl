@@ -29,7 +29,7 @@ rrdp_base_uri = "https://root.@DOMAIN@:@PORT@/rrdp/"
 # Make sure that you have an rsyncd running and a module which is
 # configured to expose the rsync repository files. By default these
 # files would be saved to: $data/repo/rsync/current/
-rsync_jail = "rsync://root.@DOMAIN@:@PORT@/repo/"
+rsync_jail = "rsync://root.@DOMAIN@/repo/"
 
 # TA AIA
 #
@@ -42,7 +42,7 @@ rsync_jail = "rsync://root.@DOMAIN@:@PORT@/repo/"
 # Manually retrieve the TA certificate from krill and copy it
 # over - it won't change again. You can get it at:
 # https://<yourkrill>/ta/ta.cer
-ta_aia = "rsync://root.@DOMAIN@:@PORT@/ta/ta.cer"
+ta_aia = "rsync://root.@DOMAIN@/ta/ta.cer"
 
 # TA URI
 #
