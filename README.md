@@ -17,6 +17,7 @@
   - TLDs (top level domain names) for Testing
     - https://datatracker.ietf.org/doc/html/rfc2606
 - KRILL_ADMIN_TOKEN : adminユーザでログイン用パスワード
+- KRILL_PORT: krillのポート番号
 
 指定例
 
@@ -26,6 +27,7 @@ RUN_USER_GID=1000
 SQUID_ADDR_PORT=127.0.0.1:33128
 DOMAIN=krill.test
 KRILL_ADMIN_TOKEN=abcde
+KRILL_PORT=3000
 ```
 
 ## 起動
@@ -51,6 +53,10 @@ KRILL_ADMIN_TOKEN=abcde
 - docker compose exec krill-root bash
 - docker compose exec krill-host1 bash
 - docker compose exec krill-host2 bash
+
+### root ユーザ利用
+
+- ex. docker compose exec -u root krill-root bash
 
 ## ブラウザアクセス
 
