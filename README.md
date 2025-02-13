@@ -33,9 +33,15 @@ KRILL_PORT=3000
 ## 起動
 
 - `./01_git-clone-pull.sh`
+- `cd krill`
+- (例) `git checkout v0.14.5`
+  - 最新版を指定する
+  - 最新版確認: <https://github.com/NLnetLabs/krill/releases>
+  - git tag で他の版を確認
+- `cd ..`
 - `./gen-conf.sh`
   - 各コンテナ用の設定ファイルが生成される
-- `docker compose build krill-root`
+- `docker compose build`
   - 実行省略しても良い (次の up -d で警告が出る)
   - "Compiling krill" に時間がかかる
 - `docker compose up -d`
