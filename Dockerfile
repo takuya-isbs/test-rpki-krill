@@ -151,6 +151,9 @@ ARG RUN_USER_GID=1012
 # Install required runtime dependencies
 RUN apk add --no-cache bash libgcc openssl tini tzdata util-linux
 
+# Install tools
+RUN apk add --no-cache curl jq
+
 # Create the user and group to run the application as
 RUN addgroup -g ${RUN_USER_GID} ${RUN_USER} && \
   adduser -D -u ${RUN_USER_UID} -G ${RUN_USER} ${RUN_USER}
