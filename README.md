@@ -32,15 +32,19 @@ KRILL_PORT=3000
 
 ## 起動
 
-- ./01_git-clone-pull.sh
-- ./gen-conf.sh
+- `./01_git-clone-pull.sh`
+- `./gen-conf.sh`
   - 各コンテナ用の設定ファイルが生成される
-- docker compose up -d
+- `docker compose build krill-root`
+  - 実行省略しても良い (次の up -d で警告が出る)
+  - "Compiling krill" に時間がかかる
+- `docker compose up -d`
 
-## 停止・再開
+## 停止
 
-- docker compose down
-  - データは消えずに残る
+- `docker compose down -v --remove-orphans`
+  - 永続データ領域は消えずに残る
+- (再開) `docker compose up -d`
 
 ## 永続データ領域
 
@@ -48,15 +52,16 @@ KRILL_PORT=3000
 - ./data-host1/
 - ./data-host2/
 
-## コンテナ内シェル
+## コンテナ内シェル利用
 
-- docker compose exec krill-root bash
-- docker compose exec krill-host1 bash
-- docker compose exec krill-host2 bash
+- `docker compose exec krill-root bash`
+- `docker compose exec krill-host1 bash`
+- `docker compose exec krill-host2 bash`
 
 ### root ユーザ利用
 
-- ex. docker compose exec -u root krill-root bash
+- docker compose exec -u root で起動
+- ex. `docker compose exec -u root krill-root bash`
 
 ## ブラウザアクセス
 
@@ -68,10 +73,10 @@ KRILL_PORT=3000
     - auto switch でプロキシする場合 DOMAIN で指定したホスト名をプロキシする
     - 例: *.krill.test
 - (例) DOMAIN=kirll.test の場合の URL
-  - https://root.krill.test:3000/ を開く
-  - https://host1.krill.test:3000/ を開く
-  - https://host2.krill.test:3000/ を開く
-  - https://root.krill.test:3000/ui/testbed を開く
+  - <https://root.krill.test:3000/> を開く
+  - <https://host1.krill.test:3000/> を開く
+  - <https://host2.krill.test:3000/> を開く
+  - <https://root.krill.test:3000/ui/testbed> を開く
 
 ## コマンド実行例
 
