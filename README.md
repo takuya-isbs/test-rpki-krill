@@ -58,6 +58,8 @@ KRILL_PORT=3000
 - ./data-host1/
 - ./data-host2/
 
+初期化するには、コンテナを停止し、これらを削除する。
+
 ## コンテナ内シェル利用
 
 - `docker compose exec krill-root bash`
@@ -90,3 +92,8 @@ KRILL_PORT=3000
   - export KRILL_CLI_TOKEN=abcde
   - export KRILL_CLI_MY_CA=testbed
   - krillc children info --child host1
+
+## test
+
+- make test-updown
+- make clean-TESTDIR

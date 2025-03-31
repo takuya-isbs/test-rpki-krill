@@ -50,3 +50,9 @@ init:
 	echo RUN_USER_UID=$$(id -u) > ./.env
 	echo RUN_USER_GID=$$(id -g) >> ./.env
 	cat ./.env
+
+test-updown:
+	./test-updown.sh
+
+clean-TESTDIR:
+	rm -rf ./TESTDIR
