@@ -32,7 +32,7 @@ build-nocache:
 	$(COMPOSE) build --no-cache
 
 $(TARGET_SHELL): shell@%:
-	$(COMPOSE) exec $* /bin/sh
+	$(COMPOSE) exec $* /bin/bash
 
 $(TARGET_LOGS): logs@%:
 	$(COMPOSE) logs $*
