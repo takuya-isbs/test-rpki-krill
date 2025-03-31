@@ -10,6 +10,9 @@ endef
 TARGET_SHELL = $(call gen_target,shell)
 .PONY += $(TARGET_SHELL)
 
+TARGET_SHELLROOT = $(call gen_target,shell-root)
+.PONY += $(TARGET_SHELLROOT)
+
 TARGET_LOGS = $(call gen_target,logs)
 .PONY += $(TARGET_LOGS)
 
@@ -33,6 +36,9 @@ build-nocache:
 
 $(TARGET_SHELL): shell@%:
 	$(COMPOSE) exec $* /bin/bash
+
+$(TARGET_SHELLROOT): shell-root@%:
+	$(COMPOSE) exec -u root $* /bin/bash
 
 $(TARGET_LOGS): logs@%:
 	$(COMPOSE) logs $*
