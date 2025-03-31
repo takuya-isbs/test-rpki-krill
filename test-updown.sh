@@ -65,3 +65,6 @@ $EXEC $HOST_C1 tee /tmp/$REPO_RES < $REPO_RES
 $EXEC $HOST_C1 krillc repo configure -c $CA1 --response /tmp/$REPO_RES
 $EXEC $HOST_C1 krillc repo show -c $CA1
 $EXEC $HOST_C1 krillc repo status -c $CA1
+
+sleep 5
+$EXEC $HOST_C1 krillc show -c $CA1 -f json | jq .resources
