@@ -1,26 +1,11 @@
 #!/bin/bash
-set -eu -o pipefail
-set -x
+cd $(dirname $(realpath $0))
+source ./test-common.sh
 
-source .env
-
-RANGE=192.168.1.0/24
-# Parent
-HOST_P=krill-root
-# Child
-HOST_C1=krill-host1
-
-CA_PARENT=testbed
-CA1=test1
-
-TESTDIR=./TESTDIR
-
-DATADIR=/var/krill/data
-
-COMPOSE="docker compose"
-EXEC="$COMPOSE exec -T -e KRILL_CLI_TOKEN=$KRILL_ADMIN_TOKEN"
-
-mkdir $TESTDIR
+if ! mkdir $TESTDIR; then
+    echo >&2 "Run 'make clean-TESTDIR' to clean"
+    exit 1
+fi
 cd $TESTDIR
 
 $EXEC $HOST_P hostname

@@ -12,7 +12,8 @@
   - squidはコンテナ内にアクセスするためのHTTPプロキシ
   - コロン区切りでアドレスとポート番号を指定
   - デフォルト値は docker-compose.yml に記載
-  - ローカルホストアドレス以外を指定すると他ホストからアクセス可能になるので注意
+  - ローカルホストアドレス以外を指定すると外部ホストからアクセス可能になるので注意
+  - SQUID_ADDR_PORT=127.0.0.1:33128 にすると任意ホストからアクセス可能
 - DOMAIN : 任意のドメイン名, テスト用TLDsを接尾辞に使用
   - TLDs (top level domain names) for Testing
     - https://datatracker.ietf.org/doc/html/rfc2606
@@ -96,4 +97,9 @@ KRILL_PORT=3000
 ## test
 
 - make test-updown
+- make test-roa
 - make clean-TESTDIR
+
+## RRDP
+
+- https://root.krill.test:3000/rrdp/notification.xml

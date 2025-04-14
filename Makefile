@@ -22,6 +22,9 @@ TARGET_LOGS_F = $(call gen_target,logs-follow)
 ps:
 	$(COMPOSE) ps
 
+init:
+	mkdir -p data-root data-host1 data-host2
+
 up: init
 	$(COMPOSE) up -d
 
@@ -46,13 +49,11 @@ $(TARGET_LOGS): logs@%:
 $(TARGET_LOGS_F): logs-follow@%:
 	$(COMPOSE) logs --follow $*
 
-init:
-	echo RUN_USER_UID=$$(id -u) > ./.env
-	echo RUN_USER_GID=$$(id -g) >> ./.env
-	cat ./.env
-
 test-updown:
 	./test-updown.sh
+
+test-roa:
+	./test-roa.sh
 
 clean-TESTDIR:
 	rm -rf ./TESTDIR
