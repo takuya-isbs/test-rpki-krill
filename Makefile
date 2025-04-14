@@ -55,5 +55,8 @@ test-updown:
 test-roa:
 	./test-roa.sh
 
+test-api-roa:
+	./test-api-roa.sh
+
 clean-TESTDIR:
 	rm -rf ./TESTDIR
