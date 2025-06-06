@@ -35,7 +35,7 @@ KRILL_PORT=3000
 
 - `./01_git-clone-pull.sh`
 - `cd krill`
-- (例) `git checkout v0.14.5`
+- (例) `git checkout v0.14.6`
   - 最新版を指定する
   - 最新版確認: <https://github.com/NLnetLabs/krill/releases>
   - git tag で他の版を確認
@@ -45,6 +45,10 @@ KRILL_PORT=3000
 - `docker compose build`
   - 実行省略しても良い (次の up -d で警告が出る)
   - "Compiling krill" に時間がかかる
+  - ビルドに失敗した場合
+    - krill 側の Dockerfile が更新される場合がある
+    - ./DIFF-Dockerfile.sh を見て差分から判断する
+    - 必要な差分を Dockerfile に反映する
 - `docker compose up -d`
 
 ## 停止
