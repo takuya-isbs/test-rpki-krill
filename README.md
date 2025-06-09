@@ -42,8 +42,11 @@ KRILL_PORT=3000
 - `cd ..`
 - `make init`
   - 各コンテナ用の設定ファイルが生成される
+  - host1 の SoftHSM を初期化する
+    - 初期化せずに使うとフリーズしてしまう
+    - 初期化後 `docker compose restart krill-host1` で復旧できる
 - `make build`
-  - 実行省略しても良い (次の up -d で警告が出るが問題ない)
+  - 実行省略しても良い (次の make up で警告が出るが問題ない)
   - "Compiling krill" に時間がかかる
   - ビルドに失敗した場合
     - krill 側の Dockerfile が更新される場合がある
@@ -101,6 +104,7 @@ KRILL_PORT=3000
 ## test
 
 - make test-updown
+  - make hsm-list-objects で、SoftHSM が使われたことを確認できる
 - make test-roa
 - make clean-TESTDIR
 
