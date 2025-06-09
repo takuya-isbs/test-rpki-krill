@@ -4,3 +4,12 @@ data_dir = "/var/krill/data"
 log_type = "stderr"
 
 service_uri = "https://host1.@DOMAIN@:@PORT@/"
+
+# https://krill.docs.nlnetlabs.nl/en/stable/hsm.html
+[[signers]]
+type = "PKCS#11"
+name = "SoftHSMv2 via PKCS#11"
+lib_path = "/usr/lib/softhsm/libsofthsm2.so"
+slot = "My RPKI host1"
+user_pin = "5678"
+login = true

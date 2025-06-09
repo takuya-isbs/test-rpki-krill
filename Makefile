@@ -22,14 +22,40 @@ TARGET_LOGS_F = $(call gen_target,logs-follow)
 ps:
 	$(COMPOSE) ps
 
-init:
-	mkdir -p data-root data-host1 data-host2
+DATA_DIRS = data-root data-host1 data-host2
 
-up: init
+init-dir:
+	mkdir -p $(DATA_DIRS)
+
+init-conf:
+	./gen-conf.sh
+
+# Use SoftHSM : https://krill.docs.nlnetlabs.nl/en/stable/hsm.html
+SO_PIN = 1234
+PIN = 5678
+COMPOSE_RUN_HOST1 = $(COMPOSE) run --rm -it krill-host1
+PKCS11_TOOL = pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so --login --pin $(PIN)
+LABEL = My RPKI host1
+
+init-hsm:
+	$(COMPOSE_RUN_HOST1) softhsm2-util --init-token --slot 0 --label "$(LABEL)" --so-pin $(SO_PIN) --pin $(PIN)
+
+hsm-list-objects:
+	$(COMPOSE_RUN_HOST1) $(PKCS11_TOOL) --list-objects
+
+init: init-dir init-conf init-hsm hsm-list-objects
+
+_DELETE-ALL:
+	rm -rI $(DATA_DIRS)
+
+up: init-dir
 	$(COMPOSE) up -d
 
 down:
 	$(COMPOSE) down
+
+down-volume:
+	$(COMPOSE) down -v
 
 build:
 	$(COMPOSE) build

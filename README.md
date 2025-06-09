@@ -40,16 +40,16 @@ KRILL_PORT=3000
   - 最新版確認: <https://github.com/NLnetLabs/krill/releases>
   - git tag で他の版を確認
 - `cd ..`
-- `./gen-conf.sh`
+- `make init`
   - 各コンテナ用の設定ファイルが生成される
-- `docker compose build`
-  - 実行省略しても良い (次の up -d で警告が出る)
+- `make build`
+  - 実行省略しても良い (次の up -d で警告が出るが問題ない)
   - "Compiling krill" に時間がかかる
   - ビルドに失敗した場合
     - krill 側の Dockerfile が更新される場合がある
     - ./DIFF-Dockerfile.sh を見て差分から判断する
     - 必要な差分を Dockerfile に反映する
-- `docker compose up -d`
+- `make up`
 
 ## 停止
 

@@ -7,7 +7,7 @@ x-krill-build: &x-krill-build
       - RUN_USER_GID=${RUN_USER_GID}
 
 x-krill-common: &x-krill-common
-  command: ["krill", "-c", "/var/krill/krill.conf"]
+  command: ["krill", "-c", "/var/krill/my-krill.conf"]
   image: krill
   #ports:
   #  - 30000:${KRILL_PORT:-3000}
@@ -33,7 +33,7 @@ services:
     volumes:
       - ./SHARE:/SHARE:rw
       - ./data-root:/var/krill/data:rw
-      - ./conf/krill-root.conf:/var/krill/krill.conf:ro
+      - ./conf/krill-root.conf:/var/krill/my-krill.conf:ro
     networks:
       krill_net:
         aliases:
@@ -48,7 +48,8 @@ services:
     volumes:
       - ./SHARE:/SHARE:rw
       - ./data-host1:/var/krill/data:rw
-      - ./conf/krill-host1.conf:/var/krill/krill.conf:ro
+      - ./conf/krill-host1.conf:/var/krill/my-krill.conf:ro
+      - hsm-host1:/var/lib/softhsm
     networks:
       krill_net:
         aliases:
@@ -63,7 +64,7 @@ services:
     volumes:
       - ./SHARE:/SHARE:rw
       - ./data-host2:/var/krill/data:rw
-      - ./conf/krill-host2.conf:/var/krill/krill.conf:ro
+      - ./conf/krill-host2.conf:/var/krill/my-krill.conf:ro
     networks:
       krill_net:
         aliases:
@@ -79,3 +80,6 @@ services:
       - ./squid-ssl-ports.conf:/etc/squid/conf.d/allow-ssl-ports.conf:ro
     networks:
       krill_net:
+
+volumes:
+  hsm-host1:

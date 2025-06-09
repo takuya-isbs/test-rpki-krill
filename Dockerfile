@@ -149,6 +149,7 @@ ARG RUN_USER_GID=1012
 
 # Install required runtime dependencies
 RUN apk add --no-cache bash libgcc openssl tini tzdata util-linux
+RUN apk add --no-cache softhsm opensc
 
 # Install tools
 RUN apk add --no-cache curl jq
