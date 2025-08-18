@@ -40,18 +40,17 @@ KRILL_PORT=3000
   - 最新版確認: <https://github.com/NLnetLabs/krill/releases>
   - git tag で他の版を確認
 - `cd ..`
-- `make init`
-  - 各コンテナ用の設定ファイルが生成される
-  - host1 の SoftHSM を初期化する
-    - 初期化せずに使うとフリーズしてしまう
-    - 初期化後 `docker compose restart krill-host1` で復旧できる
 - `make build`
-  - 実行省略しても良い (次の make up で警告が出るが問題ない)
   - "Compiling krill" に時間がかかる
   - ビルドに失敗した場合
     - krill 側の Dockerfile が更新される場合がある
     - ./DIFF-Dockerfile.sh を見て差分から判断する
     - 必要な差分を Dockerfile に反映する
+- `make init`
+  - 各コンテナ用の設定ファイルが生成される
+  - host1 の SoftHSM を初期化する
+    - 初期化せずに使うとフリーズしてしまう
+    - 初期化後 `docker compose restart krill-host1` で復旧できる
 - `make up`
 
 ## 停止
