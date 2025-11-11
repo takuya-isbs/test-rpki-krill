@@ -152,11 +152,27 @@ RUN apk add --no-cache bash libgcc openssl tini tzdata util-linux
 RUN apk add --no-cache softhsm opensc
 
 # Install tools
-RUN apk add --no-cache curl jq
+RUN apk add --no-cache curl jq shadow
 
 # Create the user and group to run the application as
-RUN addgroup -g ${RUN_USER_GID} ${RUN_USER} && \
-  adduser -D -u ${RUN_USER_UID} -G ${RUN_USER} ${RUN_USER}
+#RUN addgroup -g ${RUN_USER_GID} ${RUN_USER} && \
+#  adduser -D -u ${RUN_USER_UID} -G ${RUN_USER} ${RUN_USER}
+RUN if getent passwd ${RUN_USER_UID} > /dev/null 2>&1; then \
+       userdel ${RUN_USER}; \
+    fi; \
+    if getent group ${RUN_USER_GID} > /dev/null 2>&1; then \
+        RUN_GROUP=$(getent group ${RUN_USER_GID} | cut -d: -f1); \
+        echo "GID $RUN_USER_GID exists. Adding user $RUN_USER to group $RUN_GROUP."; \
+    else \
+        RUN_GROUP=$RUN_USER; \
+        echo "GID $RUN_USER_GID does not exist. Creating new group $RUN_GROUP and adding user $RUN_USER."; \
+        groupadd -g ${RUN_USER_GID} ${RUN_GROUP}; \
+    fi; \
+    if getent passwd ${RUN_USER} > /dev/null; then \
+        usermod -u ${RUN_USER_UID} -g ${RUN_USER_GID} ${RUN_USER}; \
+    else \
+        useradd -u ${RUN_USER_UID} -g ${RUN_USER_GID} ${RUN_USER}; \
+    fi
 
 # Create the data directory structure and install a config file that uses it
 WORKDIR /var/krill/data
