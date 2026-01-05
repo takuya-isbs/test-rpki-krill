@@ -38,15 +38,12 @@ PKCS11_TOOL = pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so --login --pin
 LABEL = My RPKI host1
 
 init-hsm:
-	$(COMPOSE_RUN_HOST1) softhsm2-util --init-token --slot 0 --label "$(LABEL)" --so-pin $(SO_PIN) --pin $(PIN)
+	$(COMPOSE_RUN_HOST1) softhsm2-util --init-token --free --label "$(LABEL)" --so-pin $(SO_PIN) --pin $(PIN)
 
 hsm-list-objects:
 	$(COMPOSE_RUN_HOST1) $(PKCS11_TOOL) --list-objects
 
 init: init-dir init-conf init-hsm hsm-list-objects
-
-_DELETE-ALL:
-	rm -rI $(DATA_DIRS)
 
 up: init-dir
 	$(COMPOSE) up -d
@@ -84,5 +81,27 @@ test-roa:
 test-api-roa:
 	./test-api-roa.sh
 
-clean-TESTDIR:
+test-all:
+	./test-updown.sh
+	./test-roa.sh
+	./test-api-roa.sh
+
+define _clean-TESTDIR
 	rm -rf ./TESTDIR
+endef
+
+clean-TESTDIR:
+	./confirm.sh
+	$(call _clean-TESTDIR)
+
+define _DELETE-ALL-DATA
+	rm -rI $(DATA_DIRS) || :
+endef
+
+CLEAN-ALL:
+	./confirm.sh
+	#make down || :
+	$(COMPOSE) down
+	$(call _clean-TESTDIR)
+	$(call _DELETE-ALL-DATA)
+	@echo "DONE: CLEAN-ALL"
